@@ -1,0 +1,62 @@
+flowchart TD
+    A([Mulai Program]) --> B[baca_data\nbaca pajak.csv]
+    B --> C{File pajak.csv\nada?}
+    C -- Tidak --> D[Print: Data belum terisi\nSilahkan isi data dulu]
+    C -- Ya --> E[/data = list rows dari CSV/]
+    D --> E
+
+    E --> F[/Tampilkan menu/]
+    F --> G{Pilihan user?}
+
+    G -- 1 --> H[tambah_umkm]
+    G -- 2 --> I[tampilkan_umkm]
+    G -- 3 --> J[cari_umkm]
+    G -- 4 --> K[sorting_omset]
+    G -- 5 --> L[hapus_umkm]
+    G -- 0 --> Z([Program Selesai])
+
+    %% === TAMBAH ===
+    H --> H1[/Input: id, nama toko,\npemilik, omset/]
+    H1 --> H2{omset >= 500 juta?}
+    H2 -- Ya --> H3[pajak = omset x 0.05]
+    H2 -- Tidak --> H4[pajak = 0]
+    H3 --> H5[simpan_umkm\ntulis ulang ke CSV]
+    H4 --> H5
+    H5 --> H6[/Print: Data berhasil\nditambahkan/]
+
+    %% === TAMPILKAN ===
+    I --> I1[/Print tabel:\nID, Nama, Pemilik,\nOmset, Pajak/]
+
+    %% === CARI ===
+    J --> J1[/Input: ID UMKM/]
+    J1 --> J2{Loop data:\numkm id == id?}
+    J2 -- Ya --> J3[/Print detail\nUMKM ditemukan/]
+    J2 -- Tidak --> J4[/Print: Tidak\nditemukan/]
+
+    %% === SORTING ===
+    K --> K1[Loop i: range len data]
+    K1 --> K2[idx = i\nLoop j: i+1 sampai len data]
+    K2 --> K3{omset j\n> omset idx?}
+    K3 -- Ya --> K4[idx = j]
+    K3 -- Tidak --> K5[lanjut j]
+    K4 --> K5
+    K5 --> K6[Tukar data i\ndan data idx]
+    K6 --> K7[tampilkan_umkm data]
+
+    %% === HAPUS ===
+    L --> L1[/Input: ID UMKM\nyang dihapus/]
+    L1 --> L2{Loop data:\numkm id == id?}
+    L2 -- Ya --> L3{Konfirmasi\ny/n?}
+    L3 -- y --> L4[data.remove umkm\nsimpan_umkm]
+    L3 -- n --> L5[Batal]
+    L2 -- Tidak --> L6[Tidak ditemukan]
+
+    %% === KEMBALI KE MENU ===
+    H6 --> F
+    I1 --> F
+    J3 --> F
+    J4 --> F
+    K7 --> F
+    L4 --> F
+    L5 --> F
+    L6 --> F

@@ -1,0 +1,11 @@
+id,nama toko,pemilik,omset,pajak
+K001,toko zulvan fotokopi,zulvan,Rp700.0 jt,Rp35.0 jt
+K002,Barokah,dedi,Rp870.0 jt,Rp43.5 jt
+K003,Lazzato,Dadang,Rp860.0 jt,Rp43.0 jt
+K004,Tirta Sembako,Tirta,Rp890.0 jt,Rp44.5 jt
+K005,Sembako Tirta,Tirta,Rp879.0 jt,Rp43.95 jt
+K001,Toko zulvan,zulvan,Rp890.0 jt,Rp44.5 jt
+K002,Barokah Sembako,dadang,Rp450.0 jt,Rp0 (Dibebas Pajakan)
+K003,Depot Tirta,Tirta,Rp50.0 jt,Rp0 (Dibebas Pajakan)
+K004,Toko AA,Dedi,Rp789.0 jt,Rp39.45 jt
+K005,Toko Agung,agung,Rp750.0 jt,Rp37.5jt
