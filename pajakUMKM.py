@@ -20,13 +20,13 @@ def baca_data():
 def tambah_umkm(data):
      umkm = {
           "id":input("ID UMKM : "),
-          "nama toko":input("Nama Toko : "),
+          "nama_toko":input("Nama Toko : "),
           "pemilik":input("Nama Pemilik : "),
           "omset":float(input("Omset : ")),
      }
-     batas = 500.000000
+     batas = 500000000
      if umkm["omset"] >= batas:         
-        umkm["pajak"] = umkm["omset"] * 0.05
+        umkm["pajak"] = umkm["omset"] * 0.005
 
 
      else:
@@ -38,7 +38,7 @@ def tambah_umkm(data):
 
 def simpan_umkm(data):
     with open(FILE, "w", newline="") as file: # ---> 'open()'= membuka file, "w"= tulis ulang data, 'newline'= mengisi baris kosong
-        fieldnames = ["id", "nama toko", "pemilik", "omset", "pajak"]
+        fieldnames = ["id", "nama_toko", "pemilik", "omset", "pajak"]
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader() # ---> untuk menulis header : id,pemilik,omset,pajak
         writer.writerows(data) # ---> untuk menulis semua data
@@ -47,35 +47,41 @@ def simpan_umkm(data):
 def tampilkan_umkm(data):
     print("\n===== DATA UMKM =====")
     print()
-    print(f"{'ID':<10} {'Nama Toko':<35} {'Pemilik':<20}{'Omset':}{'pajak':.1f}") # --> {'..':<10} = untuk menatur posisi rata kiri jarak 10 huruf
-    print("-" * 85)
+    print(
+        f"{'ID':<10}"
+        f"{'Nama Toko':<35}" 
+        f"{'Pemilik':<20}"
+        f"{'Omset':<15}"
+        f"{'pajak':<15}") # --> {'..':<10} = untuk menatur posisi rata kiri jarak 10 huruf
+    print("-" * 90)
 
     for pajak in data:
+            omset = f"Rp.{float(pajak['omset'])/1000000:.1f}jt"
+            pajak_umkm = f"Rp.{float(pajak['pajak'])/1000000:.1f}jt"
             print(
                 f"{pajak['id']:<10} "
-                f"{pajak['nama toko']:<35} "
+                f"{pajak['nama_toko']:<35} "
                 f"{pajak['pemilik']:<20} "
-                f"Rp.{float(pajak['omset']):.2f}"
-                f"Rp.{float(pajak['pajak']):.2f}"
+                f"{omset:<15}"
+                f"{pajak_umkm:<15}"
             )
 
 
 def cari_umkm(data):
      global umkm
      id = input("Masukan ID UMKM : ")
-     ditemukan = False
 
      for umkm in data:
           if umkm["id"] == id:
                print("\nData di Temukan ")
-               print(f"ID : {umkm["id"]}")
-               print(f"Nama Toko : {umkm["nama toko"]}")
-               print(f"Pemilik : {umkm["pemilik"]}")
-               print(f"Omset : Rp.{umkm["omset"]}")
-               print(f"Pajak : Rp.{umkm["pajak"]}")
-
+               print(f"ID : {umkm['id']}")
+               print(f"Nama Toko : {umkm['nama_toko']}")
+               print(f"Pemilik : {umkm['pemilik']}")
+               print(f"Omset : Rp.{umkm['omset']}")
+               print(f"Pajak : Rp.{umkm['pajak']}")
                ditemukan = True
                break
+          
           else:
                print("Data Tidak di Temukan")
 
@@ -85,12 +91,12 @@ def sorting_omset(data):
           idx = i
           for j in range(i + 1, len(data)):
                
-               if int(data[j]["omset"]) > int(data[idx]["omset"]):
+               if float(data[j]["omset"]) > float(data[idx]["omset"]):
                     idx = j
 
           data[i], data[idx] = data[idx], data[i]
 
-          tampilkan_umkm(data)
+     tampilkan_umkm(data)
     
 
 def hapus_umkm(data):
@@ -99,12 +105,19 @@ def hapus_umkm(data):
      for umkm in data:
           if umkm["id"] == hapus_id:
                print("\nData Di temukan")
-               print(f"Nama Toko : {umkm["nama toko"]}")
+               print(f"Nama Toko : {umkm['nama_toko']}")
 
                confirm = input("Yakin ingin menghapus (y/n)? : ")
+
                if confirm == 'y':
-                data.remove(umkm)
-                simpan_umkm(data)
+                    data.remove(umkm)
+                    simpan_umkm(data)
+                    print("Data Berhasil Dihapus")
+                
+               return
+          
+          if not ditemukan:
+               print("Data tidak Ditemukan")
 
 
 def menu():
